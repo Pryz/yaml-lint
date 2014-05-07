@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+
+require 'yaml'
+
+begin
+  require 'yaml-lint'
+rescue LoadError
+  $: << File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib'))
+  require 'yaml-lint'
+end
+
+if ARGV.any? {|arg| arg =~ /help|--help|-h/} or ARGV.empty?
+  puts 'yaml-lint is a tool to check the syntax of your YAML files'
+  puts 'Usage: yaml-lint <file(s) or folder(s)>'
+  exit 1
+end
+
+puts "Checking the content of #{ARGV}"
+
+bad_result = false
+
+ARGV.each do|file|
+  lint = YamlLint.new(file)
+  result = lint.do_lint
+  bad_result = true unless result and bad_result
+end
+
+puts 'Done.'
+exit bad_result ? 1 : 0
