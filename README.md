@@ -1,3 +1,5 @@
+[![GemVersion](https://badge.fury.io/rb/yaml-lint.svg)](http://badge.fury.io/rb/yaml-lint)
+
 yaml-lint
 =========
 
