@@ -42,14 +42,14 @@ class YamlLint
     unless File.exists? @file
       error "File #{@file} does not exist"
       @error = true
-      return
-    end
-    if File.directory? @file
-      self.parse_directory @file
     else
-      self.parse_file @file
+      if File.directory? @file
+        self.parse_directory @file
+      else
+        self.parse_file @file
+      end
     end
-    @error
+    @error ? false : true
   end
 
   def parse_directory(directory)
@@ -67,6 +67,7 @@ class YamlLint
   def parse_file(file)
     unless File.extname(file) == ".yaml"
       error "The extension of the file #{file} should be .yaml"
+      @error = true
       return
     end
     begin

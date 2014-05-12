@@ -9,7 +9,7 @@ rescue LoadError
   require 'yaml-lint'
 end
 
-if ARGV.any? {|arg| arg =~ /help|--help|-h/} or ARGV.empty?
+if ARGV.any? {|arg| arg =~ /^help$|^--help|^-h|^-/} or ARGV.empty?
   puts 'yaml-lint is a tool to check the syntax of your YAML files'
   puts 'Usage: yaml-lint <file(s) or folder(s)>'
   exit 1
@@ -22,7 +22,7 @@ bad_result = false
 ARGV.each do|file|
   lint = YamlLint.new(file)
   result = lint.do_lint
-  bad_result = true unless result and bad_result
+  bad_result = true unless result
 end
 
 puts 'Done.'
