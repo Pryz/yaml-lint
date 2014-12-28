@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'yaml-lint'
-  s.version     = '0.0.3'
+  s.version     = '0.0.4'
   s.date        = '2014-05-06'
   s.summary     = 'Really simple YAML lint'
   s.description = 'Check if your YAML files can be loaded.'

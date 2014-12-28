@@ -1,0 +1,9 @@
+---
+key value
+hash:
+  key1: value
+  key2: value
+array:
+  - entry1
+  - entry2
+  - "%{variable}"

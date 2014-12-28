@@ -1,0 +1,10 @@
+language: ruby
+script: rspec 
+deploy:
+  provider: rubygems
+  api_key:
+    secure: IE+yEVOOd/NplcHNyQecGRm88CSFnPm9UlZc6b+1fcbAXp/lxslMRP6Cci2vhiDgzzaMXAFIQ9Ly7z1PwRklVML/quyWFUwdHCy3H0qWsnsLX1llR+nD8gu3SYP7mFW9vnqHQvyySdUQTD9W1rgLW4ZzH9jxhmmuQD5EezgLjTo=
+  gem: yaml-lint
+  on:
+    tags: true
+    repo: Pryz/yaml-lint

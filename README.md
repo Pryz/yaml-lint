@@ -3,21 +3,27 @@
 yaml-lint
 =========
 
-Simple yaml check tool.
-
-* Work in progress *
+Simple yaml check tool. yaml-lint will simply try to load the YAML file with the
+built-in Ruby yaml library.
 
 Install
 -------
 
-  gem install yaml-lint
+```shell
+gem install yaml-lint
+```
 
 Usage
 -----
 
-  yaml-lint filename.yaml
-  
-TODO
-----
+Check a file
 
-  * Add Puppet hiera.yaml compatibility
+```shell
+yaml-lint filename.yaml
+```
+
+Check a complete folder
+
+```shell
+yaml-lint hiera/
+```
