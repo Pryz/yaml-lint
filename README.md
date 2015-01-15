@@ -1,5 +1,6 @@
 [![GemVersion](https://badge.fury.io/rb/yaml-lint.svg)](http://badge.fury.io/rb/yaml-lint)
 [![TravisBuild](https://travis-ci.org/Pryz/yaml-lint.svg?branch=master)](https://travis-ci.org/Pryz/yaml-lint.svg?branch=master)
+[![Coverage Status](https://coveralls.io/repos/Pryz/yaml-lint/badge.svg?branch=master)](https://coveralls.io/r/Pryz/yaml-lint?branch=master)
 
 yaml-lint
 =========
