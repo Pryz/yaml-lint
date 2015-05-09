@@ -53,7 +53,6 @@ class YamlLint
   end
 
   def parse_directory(directory)
-    return nil if ['.', '..'].include? directory
     Dir.glob("#{directory}/*").each do |fdir|
       if File.directory? fdir
         self.parse_directory fdir
