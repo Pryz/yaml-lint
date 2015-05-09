@@ -17,7 +17,7 @@ describe 'YamlLint' do
 
     it 'checks both files in a dir' do
       lint = YamlLint.new(FIXTURES_PATH)
-      expect(lint.do_lint).to eq 1
+      expect(lint.do_lint).to be > 0
     end
   end
 
@@ -38,6 +38,26 @@ describe 'YamlLint' do
       lint = YamlLint.new(FIXTURES_PATH, {:veryquiet => true})
       expect { lint.do_lint }.to_not output(/Syntax OK/).to_stdout
       expect { lint.do_lint }.to_not output(/error/).to_stdout
+    end
+  end
+
+  describe 'with different file extensions' do
+
+    it 'is okay with known extensions' do
+      lint = YamlLint.new(FIXTURES_PATH + 'good.yaml')
+      expect(lint.do_lint).to eq 0
+      lint = YamlLint.new(FIXTURES_PATH + 'good.yml')
+      expect(lint.do_lint).to eq 0
+    end
+
+    it 'is not okay with an unknown extensions' do
+      lint = YamlLint.new(FIXTURES_PATH + 'good.lmay')
+      expect(lint.do_lint).to eq 1
+    end
+
+    it 'is okay with an unknown extensions when the extension is not checked' do
+      lint = YamlLint.new(FIXTURES_PATH + 'good.lmay', {:nocheckfileext => true})
+      expect(lint.do_lint).to eq 0
     end
   end
 end

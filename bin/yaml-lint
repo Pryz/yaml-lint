@@ -21,6 +21,10 @@ OptionParser.new do |opts|
     options[:veryquiet] = q
   end
 
+  opts.on("-n", "--no-check-file-ext", "Do not check the file extension to match known yaml files.") do |n|
+    options[:nocheckfileext] = true
+  end
+
   opts.on_tail("-h", "--help") do |q|
     puts 'yaml-lint is a tool to check the syntax of your YAML files'
     puts 'Usage: yaml-lint <file(s) or folder(s)>'
