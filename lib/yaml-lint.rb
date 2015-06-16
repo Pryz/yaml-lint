@@ -43,6 +43,7 @@ class YamlLint
   def do_lint
     unless File.exists? @file
       error "File #{@file} does not exist"
+      return 0
     else
       if File.directory? @file
         return self.parse_directory @file
