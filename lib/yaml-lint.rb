@@ -9,15 +9,15 @@ module Logging
               :reset  => "\033[0m" }
 
   def info(message)
-    emit(:message => message, :color => :green)
+    emit(:message => message, :color => :green) unless @config[:quiet]
   end
 
   def warn(message)
-    emit(:message => message, :color => :yellow)
+    emit(:message => message, :color => :yellow) unless @config[:veryquiet]
   end
 
   def error(message)
-    emit(:message => message, :color => :red)
+    emit(:message => message, :color => :red) unless @config[:veryquiet]
   end
 
   def emit(opts={})
@@ -33,50 +33,48 @@ end
 class YamlLint
   include Logging
 
-  def initialize(file)
+  def initialize(file, config={})
     @file = file
-    @error = false
+    @config = config
+    @config[:quiet] = true if @config[:veryquiet]
+    @config[:nocheckfileext] ||= false
   end
 
   def do_lint
     unless File.exists? @file
       error "File #{@file} does not exist"
-      @error = true
     else
       if File.directory? @file
-        self.parse_directory @file
+        return self.parse_directory @file
       else
-        self.parse_file @file
+        return self.parse_file @file
       end
     end
-    @error ? false : true
   end
 
   def parse_directory(directory)
-    Dir.glob("#{directory}/*").each do |fdir|
+    Dir.glob("#{directory}/*").inject(0) do |mem, fdir|
       if File.directory? fdir
-        self.parse_directory fdir
+        mem + parse_directory(fdir)
       else
-        self.parse_file fdir
+        mem + parse_file(fdir)
       end
     end
-    nil
   end
 
   def parse_file(file)
-    unless File.extname(file) =~ /.(yaml|yml)$/
+    if (not File.extname(file) =~ /.(yaml|yml)$/) && (not @config[:nocheckfileext])
       error "The extension of the file #{file} should be .yaml or .yml"
-      @error = true
-      return
+      return 1
     end
     begin
       YAML.load_file(file)
     rescue Exception => err
       error "File : #{file}, error: #{err}"
-      @error = true
+      return 1
     else
       info "File : #{file}, Syntax OK"
+      return 0
     end
-    nil
   end
 end

@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'yaml'
+require 'optparse'
 
 begin
   require 'yaml-lint'
@@ -9,21 +10,36 @@ rescue LoadError
   require 'yaml-lint'
 end
 
-if ARGV.any? {|arg| arg =~ /^help$|^--help|^-h|^-/} or ARGV.empty?
-  puts 'yaml-lint is a tool to check the syntax of your YAML files'
-  puts 'Usage: yaml-lint <file(s) or folder(s)>'
-  exit 1
-end
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: yaml-lint <file(s) or folder(s)>"
 
-puts "Checking the content of #{ARGV}"
+  opts.on("-q", "--quiet", "Run quiet. Only log failing files.") do |q|
+    options[:quiet] = q
+  end
+  opts.on("-Q", "--very-quiet", "Run more quiet. Return code is the number of failed files.") do |q|
+    options[:veryquiet] = q
+  end
 
-bad_result = false
+  opts.on("-n", "--no-check-file-ext", "Do not check the file extension to match known yaml files.") do |n|
+    options[:nocheckfileext] = true
+  end
+
+  opts.on_tail("-h", "--help") do |q|
+    puts 'yaml-lint is a tool to check the syntax of your YAML files'
+    puts 'Usage: yaml-lint <file(s) or folder(s)>'
+    exit -1
+  end
+end.parse!
+
+puts "Checking the content of #{ARGV}" unless options[:quiet]
+
+failed = 0
 
 ARGV.each do|file|
-  lint = YamlLint.new(file)
-  result = lint.do_lint
-  bad_result = true unless result
+  lint = YamlLint.new(file, options)
+  failed = failed + lint.do_lint
 end
 
-puts 'Done.'
-exit bad_result ? 1 : 0
+puts 'Done.' unless options[:quiet]
+exit failed
