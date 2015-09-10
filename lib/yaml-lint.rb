@@ -9,24 +9,21 @@ module Logging
               :reset  => "\033[0m" }
 
   def info(message)
-    emit(:message => message, :color => :green) unless @config[:quiet]
+    emit(:message => message, :color => :green, :out => STDOUT) unless @config[:quiet]
   end
 
   def warn(message)
-    emit(:message => message, :color => :yellow) unless @config[:veryquiet]
+    emit(:message => message, :color => :yellow, :out => STDOUT) unless @config[:veryquiet]
   end
 
   def error(message)
-    emit(:message => message, :color => :red) unless @config[:veryquiet]
+    emit(:message => message, :color => :red, :out => STDERR) unless @config[:veryquiet]
   end
 
   def emit(opts={})
     color   = opts[:color]
     message = opts[:message]
-    print ESCAPES[color]
-    print message
-    print ESCAPES[:reset]
-    print "\n"
+    opts[:out].puts ESCAPES[color] + message + ESCAPES[:reset]
   end
 end
 
