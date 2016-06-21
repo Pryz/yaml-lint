@@ -12,7 +12,7 @@ end
 
 options = {}
 OptionParser.new do |opts|
-  opts.banner = "Usage: yaml-lint <file(s) or folder(s)>"
+  opts.banner = "Usage: yaml-lint [options] <file(s) or folder(s)>"
 
   opts.on("-q", "--quiet", "Run quiet. Only log failing files.") do |q|
     options[:quiet] = q
@@ -27,7 +27,7 @@ OptionParser.new do |opts|
 
   opts.on_tail("-h", "--help") do |q|
     puts 'yaml-lint is a tool to check the syntax of your YAML files'
-    puts 'Usage: yaml-lint <file(s) or folder(s)>'
+    puts opts
     exit -1
   end
 end.parse!
