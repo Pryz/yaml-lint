@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'yaml-lint'
-  s.version     = '0.0.7'
-  s.date        = '2015-06-16'
+  s.version     = '0.0.8'
+  s.date        = '2016-06-29'
   s.summary     = 'Really simple YAML lint'
   s.description = 'Check if your YAML files can be loaded.'
   s.homepage    = 'https://github.com/Pryz/yaml-lint'
