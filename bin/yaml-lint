@@ -3,12 +3,12 @@
 require 'yaml'
 require 'optparse'
 
-begin
-  require 'yaml-lint'
-rescue LoadError
+#begin
+#  require 'yaml-lint'
+#rescue LoadError
   $: << File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib'))
   require 'yaml-lint'
-end
+#end
 
 options = {}
 OptionParser.new do |opts|
@@ -23,6 +23,10 @@ OptionParser.new do |opts|
 
   opts.on("-n", "--no-check-file-ext", "Do not check the file extension to match known yaml files.") do |n|
     options[:nocheckfileext] = true
+  end
+
+  opts.on("-i", "--ignore-non-yaml-files", "Ignoring non-yaml files.") do |n|
+    options[:ignorenoyaml] = true
   end
 
   opts.on_tail("-h", "--help") do |q|

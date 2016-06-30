@@ -65,6 +65,10 @@ class YamlLint
 
   def parse_file(file)
     if (not File.extname(file) =~ /.(yaml|yml)$/) && (not @config[:nocheckfileext])
+      if @config[:ignorenoyaml]
+        info "File : #{file}, Ignored"
+        return 0
+      end
       error "The extension of the file #{file} should be .yaml or .yml"
       return 1
     end
