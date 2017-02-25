@@ -46,7 +46,8 @@ class YamlLint
       return 0
     else
       if File.directory? @file
-        return self.parse_directory @file
+        directory = format_directory(@file)
+        return self.parse_directory directory
       else
         return self.parse_file @file
       end
@@ -81,5 +82,11 @@ class YamlLint
       info "File : #{file}, Syntax OK"
       return 0
     end
+  end
+
+  private
+
+  def format_directory(directory)
+    directory[-1] == '/' ? directory.chop : directory
   end
 end
