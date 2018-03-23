@@ -33,6 +33,10 @@ OptionParser.new do |opts|
     options[:exclude] = n
   end
 
+  opts.on("-c", "--no-color", "Disables the colors in the output.") do |n|
+    options[:nocolor] = true
+  end
+
   opts.on_tail("-h", "--help") do |q|
     puts 'yaml-lint is a tool to check the syntax of your YAML files'
     puts opts
