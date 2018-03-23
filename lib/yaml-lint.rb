@@ -56,6 +56,7 @@ class YamlLint
 
   def parse_directory(directory)
     Dir.glob("#{directory}/*").inject(0) do |mem, fdir|
+      next mem if (Array(@config[:exclude])).include? File.basename(fdir)
       if File.directory? fdir
         mem + parse_directory(fdir)
       else

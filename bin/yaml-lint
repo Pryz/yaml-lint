@@ -29,6 +29,10 @@ OptionParser.new do |opts|
     options[:ignorenoyaml] = true
   end
 
+  opts.on("-e x,y,z", "--exclude x,y,z", Array, "Coma-separated list of files or folders to exclude.") do |n|
+    options[:exclude] = n
+  end
+
   opts.on("-c", "--no-color", "Disables the colors in the output.") do |n|
     options[:nocolor] = true
   end
