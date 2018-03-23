@@ -23,9 +23,9 @@ module Logging
   def emit(opts={})
     color   = opts[:color]
     message = opts[:message]
-    print ESCAPES[color]
+    print ESCAPES[color] unless @config[:nocolor]
     print message
-    print ESCAPES[:reset]
+    print ESCAPES[:reset] unless @config[:nocolor]
     print "\n"
   end
 end
