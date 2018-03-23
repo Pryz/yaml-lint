@@ -29,6 +29,10 @@ OptionParser.new do |opts|
     options[:ignorenoyaml] = true
   end
 
+  opts.on("-e x,y,z", "--exclude x,y,z", Array, "Coma-separated list of files or folders to exclude.") do |n|
+    options[:exclude] = n
+  end
+
   opts.on_tail("-h", "--help") do |q|
     puts 'yaml-lint is a tool to check the syntax of your YAML files'
     puts opts
