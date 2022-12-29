@@ -41,7 +41,7 @@ class YamlLint
   end
 
   def do_lint
-    unless File.exists? @file
+    unless File.exist? @file
       error "File #{@file} does not exist"
       return 0
     else
