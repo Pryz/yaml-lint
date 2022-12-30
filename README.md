@@ -29,3 +29,9 @@ Check a complete folder
 ```shell
 yaml-lint hiera/
 ```
+
+Check a complete folder, ignoring any non-YAML files
+
+```shell
+yaml-lint -i hiera/
+```
