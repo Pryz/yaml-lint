@@ -75,7 +75,13 @@ class YamlLint
       return 1
     end
     begin
-      ::YAML.respond_to?(:unsafe_load) ? ::YAML.unsafe_load(file) : ::YAML.load_file(file)
+      if ::YAML.respond_to?(:unsafe_load)
+        # Specific to psych 4.0+
+        payload = ::File.read(file)
+        ::YAML.unsafe_load(payload)
+      else
+        ::YAML.load_file(file)
+      end
     rescue Exception => err
       error "File : #{file}, error: #{err}"
       return 1
